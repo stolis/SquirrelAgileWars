@@ -1,0 +1,16 @@
+{
+  "name": "testgame",
+  "version": "1.0.0",
+  "description": "Holds the network aspects of the game synchronized",
+  "main": "game.net.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "gamenet",
+    "npm"
+  ],
+  "author": "akokkalakis",
+  "license": "UNLICENSED"
+}
