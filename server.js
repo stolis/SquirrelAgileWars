@@ -22,10 +22,10 @@ io.on('connection', function (socket){
   socket.broadcast.emit('newPlayer', players[socket.id]);
 
   socket.on('disconnect', function (){
-    console.log('user disconnected');
+    //console.log('user disconnected');
     // remove this player from our players object
     delete players[socket.id];
-    console.log(players);
+    //console.log(players);
     gameNet.setPlayersInGame(players);
     // emit a message to all players to remove this player
     io.emit('disconnect', socket.id);
