@@ -1,9 +1,19 @@
 var playersInGame = {};
 
 module.exports = {
+    init : init,
     setPlayersInGame : setPlayersInGame,
-    addPlayerInGame : addPlayerInGame//,
-    //removePlayerFromGame : removePlayerFromGame
+    addPlayerInGame : addPlayerInGame,
+    players : getPlayersInGame,
+    deletePlayer : deletePlayerInGame
+}
+
+function init () {
+    playersInGame = {};
+}
+
+function getPlayersInGame () {
+    return playersInGame;
 }
 
 function setPlayersInGame(players) {
@@ -12,17 +22,19 @@ function setPlayersInGame(players) {
 
 function addPlayerInGame(socketId) {
     playersInGame[socketId] = {
-        rotation: 0,
-        x: Math.floor(Math.random() * 700) + 50,
-        y: Math.floor(Math.random() * 500) + 50,
         playerId: socketId,
-        team: (Math.floor(Math.random() * 2) == 0) ? 'red' : 'blue'
-      };
-    console.log(playersInGame);
-    return playersInGame;
+        team: (Math.floor(Math.random() * 2) == 0) ? 'red' : 'blue',
+        transform: {
+            x: Math.floor(Math.random() * 700) + 50,
+            y: Math.floor(Math.random() * 500) + 50,
+            rotation: 0,
+        },
+        velocity: Math.floor(Math.random() * 50) + 50
+    };
 }
 
-/*function removePlayerFromGame(socketId){
-    delete module.exports.playersInGame[socketId];
-}*/
+function deletePlayerInGame(socketId) {
+    delete playersInGame[socketId];
+}
+
 
