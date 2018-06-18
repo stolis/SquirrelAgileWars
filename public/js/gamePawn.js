@@ -109,6 +109,7 @@ var GamePawn = GameObject.extend({
         });
     },
     move: function () {
+        this.physicsObject.body.isMoving = true;
         if (this.engine.cursors.left.isDown && this.engine.cursors.up.isDown){
             this.physicsObject.setVelocityX(-this.velocity);
             this.physicsObject.setVelocityY(-this.velocity);
@@ -174,6 +175,7 @@ var GamePawn = GameObject.extend({
             }
             this.physicsObject.anims.stop();
             this.physicsObject.setVelocity(0);
+            this.physicsObject.body.isMoving = false;
         }
         this.setTransform({ x: this.physicsObject.x, y: this.physicsObject.y, rotation: this.physicsObject.rotation });
     },
@@ -189,5 +191,10 @@ var GamePawn = GameObject.extend({
         else {
             this.physicsObject.oldPosition = {};
         }
+    },
+    isMoving: function () {
+        if (this.physicsObject.body)
+            return this.physicsObject.body.isMoving;
+        else return false;
     }
 });

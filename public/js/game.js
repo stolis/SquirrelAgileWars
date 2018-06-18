@@ -50,7 +50,8 @@ function create() {
     });
 
     //event fire when a user disconnects
-    this.socket.on('disconnnect', function (playerId){
+    this.socket.on('disconnnected', function (playerId){
+        alert('disconnected in client');
         self.otherPlayers.getChildren().forEach(function (otherPlayer){
             if (playerId === otherPlayer.playerId){
                 otherPlayer.destroy();
@@ -81,7 +82,6 @@ function create() {
                 
                 otherPlayer.x = playerInfo.transform.x;
                 otherPlayer.y = playerInfo.transform.y;
-                
             }
         });
     });
@@ -127,13 +127,14 @@ function create() {
 function update() {
     if (this.player) {
         this.player.move();
-        console.log(this.player.pawnHasMoved());
+        
         if (this.player.pawnHasMoved()) {
             this.socket.emit('playerMovement', this.player.getTransform());
         }
-        /*else {
+        
+        if (!this.player.isMoving())
             this.socket.emit('playerStoppedMoving');
-        }*/
+        
         this.player.updatePawnTransform();
     }
 }

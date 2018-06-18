@@ -18,16 +18,17 @@ io.on('connection', function (socket){
   socket.emit('currentPlayers', gameNet.players());
   socket.broadcast.emit('newPlayer', gameNet.players()[socket.id]);
 
+  socket.on('disconnecting', function (){
+    io.emit('disconnected', socket.id);
+  });
+  
   socket.on('disconnect', function (){
     gameNet.deletePlayer(socket.id);
-    io.emit('disconnect', socket.id);
   });
 
   // when a player moves, update the player data
   socket.on('playerMovement', function (movementData) {
-    gameNet.players()[socket.id].transform.x = movementData.x;
-    gameNet.players()[socket.id].transform.y = movementData.y;
-    gameNet.players()[socket.id].transform.rotation = movementData.rotation;
+    gameNet.players()[socket.id].transform = movementData;
     // emit a message to all players about the player that moved
     socket.broadcast.emit('playerMoved', gameNet.players()[socket.id]);
   });
